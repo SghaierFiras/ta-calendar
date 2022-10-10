@@ -1,0 +1,132 @@
+body {
+	margin: 3rem 7rem;
+	background-color: #e5e5f7;
+	opacity: 0.8;
+	background-image: radial-gradient(#444cf7 0.5px, transparent 0.5px),
+		radial-gradient(#444cf7 0.5px, #e5e5f7 0.5px);
+	background-size: 20px 20px;
+	background-position: 0 0, 10px 10px;
+}
+.logo {
+	display: flex;
+	justify-content: center;
+	color: #2276dd;
+	font-weight: 500;
+	font-size: 40px;
+	text-decoration: none;
+	margin-left: 10px;
+}
+
+.mainCalendar {
+	display: grid;
+	grid-template-columns: 1fr 7fr;
+	/* grid-template-rows: 1fr 14fr; */
+	grid-template-areas:
+		"header header"
+		"timeline days";
+	box-shadow: 0 2px 8px rgba(179, 208, 232, 0.6);
+	border-radius: 8px !important;
+}
+.backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	z-index: 10;
+	background: rgba(0, 0, 0, 0.75);
+}
+.calendarHeader {
+	grid-area: header;
+	display: flex;
+	flex-direction: column;
+}
+.sousHeader {
+	display: flex;
+	justify-content: space-between !important;
+	align-items: center;
+}
+
+.calendarBody {
+	grid-area: days;
+	display: flex;
+	flex-direction: row;
+}
+.hourBlock {
+	background-color: whitesmoke;
+	margin: 0;
+	position: relative;
+	box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
+	transition: all 0.2s;
+	border-color: #e7e7e8;
+	border-style: solid;
+	border-width: 2px 1px;
+	width: 97%;
+	height: 6%;
+	min-width: 126px;
+}
+.hourBlock:hover {
+	background-color: white;
+	box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
+	transform: scale(1.01);
+}
+
+.h1 {
+	color: #2276dd;
+}
+.button {
+	margin: 2px 0;
+	height: 80%;
+	border-style: none;
+	font: 1.25rem sans-serif;
+	border-radius: 0.25rem;
+	cursor: pointer;
+	background: #56ccf2;
+	background: linear-gradient(to right, #2f80ed, #56ccf2);
+	color: white;
+}
+.today {
+	border: solid 2px #2276dd;
+}
+
+.dayBlock {
+	width: 98%;
+}
+
+.dayName {
+	grid-column: 1;
+	text-align: center;
+	background-color: #18698d;
+	align-self: center;
+	color: white;
+	text-transform: uppercase;
+	font-size: 25px;
+	font-weight: 600;
+	height: 6%;
+}
+.timeline {
+	grid-area: timeline;
+}
+.hour {
+	color: white;
+	text-transform: uppercase;
+	font-size: 25px;
+	font-weight: 600;
+	width: 10rem;
+	grid-column: 1;
+	text-align: center;
+	background-color: #18698d;
+	height: 40px;
+	width: 10rem;
+	border-bottom: 1px rgb(78, 78, 78) solid;
+}
+.hourHeader {
+	text-transform: uppercase;
+	font-size: 25px;
+	font-weight: 600;
+	text-align: center;
+	color: #18698d;
+	height: 36px;
+	width: 10rem;
+	border-bottom: 1px rgb(78, 78, 78) solid;
+}
