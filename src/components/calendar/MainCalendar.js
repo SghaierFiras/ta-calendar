@@ -4,21 +4,27 @@ import CalendarHeader from "./CalendarHeader";
 import HourBlock from "./HourBlock";
 import SessionModal from "../features/SessionModal";
 import GlobalContext from "../../context/GlobalContext";
+import TimeIndexHelper from "./TimeIndexHelper";
 import styles from "./style.module.css";
 
 //date-fns import
 import formatISO from "date-fns/formatISO";
 import addHours from "date-fns/addHours";
 import addDays from "date-fns/addDays";
+import intlFormat from "date-fns/intlFormat";
+import getDate from "date-fns/getDate";
 
 function MainCalendar() {
 	const { hours, setHours } = useContext(GlobalContext);
 	const { days, setDays } = useContext(GlobalContext);
 	const { months, setMonths } = useContext(GlobalContext);
 
+	let currentTime = useContext(GlobalContext);
+
 	let today = useContext(GlobalContext);
 	let weekday = useContext(GlobalContext);
 	today = today.today;
+	// let newDate;
 
 	weekday = days[today.getDay() - 1];
 	let [year, month, day, initDate, hour] = [
@@ -29,38 +35,41 @@ function MainCalendar() {
 		today.getHours(),
 	];
 	let [date, setDate] = useState(initDate);
-	let todayStringified = formatISO(today, {
-		format: "extended",
-		representation: "date",
-	});
+	// let todayStringified = intlFormat(
+	// 	today,
+	// 	{
+	// 		year: "numeric",
+	// 		month: "long",
+	// 		day: "2-digit",
+	// 	},
+	// 	{ locale: "fr" }
+	// );
 
 	const [events, setEvents] = useState([]);
 	const [showModal, setShowModal] = useState(false);
-	useEffect(() => {
-		fetch("https://calendar-ta-default-rtdb.firebaseio.com/events.json")
-			.then((res) => res.json())
-			.then((data) => {
-				setEvents(data);
-			});
-	}, []);
+	// useEffect(() => {
+	// 	fetch("https://calendar-ta-default-rtdb.firebaseio.com/events.json")
+	// 		.then((res) => res.json())
+	// 		.then((data) => {
+	// 			setEvents(data);
+	// 		});
+	// }, []);
 
 	const closeModal = () => {
-		return setShowModal(false);
+		return setShowModal(true);
 	};
 
-	const toggleEventModalHandler = (e) => {
+	const toggleEventModalHandler = (e, hrIdx, dayIdx) => {
 		e.preventDefault();
 		setShowModal(!showModal);
 	};
 	const showNextWeek = () => {
-		console.log(todayStringified);
 		return setDate(date + 7);
 	};
 	const showPrevWeek = () => {
-		console.log(todayStringified);
 		return setDate(date - 7);
 	};
-	const setTimeBlock = (day) => {
+	const setTimeBlock = () => {
 		const timeBlock = [];
 
 		for (let index = 8; index <= 22; index++) {
@@ -76,6 +85,29 @@ function MainCalendar() {
 		return timeBlock;
 	};
 
+	const setDayBlock = () => {
+		const dayBlock = [];
+
+		for (let index = 0; index < 7; index++) {
+			dayBlock.push({
+				id: index,
+
+				name: "",
+			});
+		}
+
+		return dayBlock;
+	};
+
+	// const addDays = function(date, days) {
+	// 	date.setDate(date.getDate() + days);
+	// 	return date;
+	// };
+
+	// let newDate = new Date();
+
+	// console.log("MainCalendar ", todayStringified);
+	let newDate;
 	return (
 		<Fragment>
 			{showModal && (
@@ -85,7 +117,7 @@ function MainCalendar() {
 						className={styles.backdrop}
 					></div>
 					<div>
-						<SessionModal closeModal={closeModal}></SessionModal>
+						<SessionModal></SessionModal>
 					</div>
 				</div>
 			)}
@@ -100,24 +132,35 @@ function MainCalendar() {
 					))}
 				</div>
 				<div className={styles.calendarBody}>
-					{days.map((day, dayIndex) => (
-						<div
-							className={styles.dayBlock}
-							onClick={toggleEventModalHandler}
-							key={dayIndex}
-							day
-						>
-							<div className={styles.dayName}>{day}</div>
-							{setTimeBlock().map((hour, i) => (
-								<HourBlock
-									key={i}
-									className={styles.hourBlock}
-									modalIsShown
-									hourIndex={hour.name}
-								/>
-							))}
-						</div>
-					))}
+					{days.map((day, dayIdx) => {
+						newDate = addDays(today, 1);
+						let todayStringified = formatISO(newDate, {
+							format: "extended",
+							representation: "date",
+						});
+						return (
+							<div
+								className={styles.dayBlock}
+								onClick={toggleEventModalHandler}
+								key={dayIdx}
+								day
+							>
+								<div className={styles.dayName}>{day}</div>
+								{setTimeBlock().map((hour, hrIdx) => {
+									return (
+										<HourBlock
+											onClick={toggleEventModalHandler}
+											key={hrIdx}
+											className={styles.hourBlock}
+											modalIsShown
+											hourIndex={hour.name}
+											date={todayStringified}
+										/>
+									);
+								})}
+							</div>
+						);
+					})}
 				</div>
 			</div>
 		</Fragment>

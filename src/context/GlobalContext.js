@@ -2,9 +2,8 @@ import React from "react";
 
 const GlobalContext = React.createContext({
 	today: new Date(),
-	weekday:"",
+	weekday: "",
 	currentTime: "",
-
 
 	days: [
 		"Monday",
@@ -15,7 +14,6 @@ const GlobalContext = React.createContext({
 		"Saturday",
 		"Sunday",
 	],
-
 });
 
 export default GlobalContext;
