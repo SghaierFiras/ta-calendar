@@ -3,8 +3,7 @@ import styles from "./featuresStyles.module.css";
 import GlobalContext from "../../context/GlobalContext";
 
 function SessionForm(props) {
-	let currentTime = useContext(GlobalContext);
-	// console.log(currentTime.currentTime);
+	const { currentTime } = useContext(GlobalContext);
 
 	const [events, setEvents] = useState([]);
 	const titleRef = useRef();
@@ -12,8 +11,6 @@ function SessionForm(props) {
 	const timeRef = useRef();
 	const subjectRef = useRef();
 	const levelRef = useRef();
-
-	const [showModal, setShowModal] = useState(false);
 
 	useEffect(() => {
 		fetch("https://calendar-ta-default-rtdb.firebaseio.com/events.json")
@@ -38,7 +35,7 @@ function SessionForm(props) {
 			headers: { "Content-Type": "application/json" },
 		});
 	};
-
+	console.log("sessionForm", currentTime);
 	return (
 		<div className={styles.card}>
 			<form className={styles.form} onSubmit={addEventHandler}>
@@ -56,7 +53,7 @@ function SessionForm(props) {
 						ref={timeRef}
 						type='datetime-local'
 						name='time'
-						defaultValue={currentTime.currentTime}
+						defaultValue={currentTime}
 					/>
 				</div>
 				<div>

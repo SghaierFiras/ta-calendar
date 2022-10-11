@@ -4,28 +4,14 @@ import CalendarHeader from "./CalendarHeader";
 import HourBlock from "./HourBlock";
 import SessionModal from "../features/SessionModal";
 import GlobalContext from "../../context/GlobalContext";
-import TimeIndexHelper from "./TimeIndexHelper";
 import styles from "./style.module.css";
 
 //date-fns import
-import formatISO from "date-fns/formatISO";
-import addHours from "date-fns/addHours";
-import addDays from "date-fns/addDays";
-import intlFormat from "date-fns/intlFormat";
-import getDate from "date-fns/getDate";
+import { addDays, addHours, intlFormat, formatISO, getDate } from "date-fns";
 
 function MainCalendar() {
-	const { hours, setHours } = useContext(GlobalContext);
-	const { days, setDays } = useContext(GlobalContext);
-	const { months, setMonths } = useContext(GlobalContext);
-
-	let currentTime = useContext(GlobalContext);
-
-	let today = useContext(GlobalContext);
-	let weekday = useContext(GlobalContext);
-	today = today.today;
-	// let newDate;
-
+	let { currentTime, today, weekday, days } = useContext(GlobalContext);
+	let newDate = today;
 	weekday = days[today.getDay() - 1];
 	let [year, month, day, initDate, hour] = [
 		today.getFullYear(),
@@ -35,15 +21,6 @@ function MainCalendar() {
 		today.getHours(),
 	];
 	let [date, setDate] = useState(initDate);
-	// let todayStringified = intlFormat(
-	// 	today,
-	// 	{
-	// 		year: "numeric",
-	// 		month: "long",
-	// 		day: "2-digit",
-	// 	},
-	// 	{ locale: "fr" }
-	// );
 
 	const [events, setEvents] = useState([]);
 	const [showModal, setShowModal] = useState(false);
@@ -85,29 +62,6 @@ function MainCalendar() {
 		return timeBlock;
 	};
 
-	const setDayBlock = () => {
-		const dayBlock = [];
-
-		for (let index = 0; index < 7; index++) {
-			dayBlock.push({
-				id: index,
-
-				name: "",
-			});
-		}
-
-		return dayBlock;
-	};
-
-	// const addDays = function(date, days) {
-	// 	date.setDate(date.getDate() + days);
-	// 	return date;
-	// };
-
-	// let newDate = new Date();
-
-	// console.log("MainCalendar ", todayStringified);
-	let newDate;
 	return (
 		<Fragment>
 			{showModal && (
@@ -117,7 +71,7 @@ function MainCalendar() {
 						className={styles.backdrop}
 					></div>
 					<div>
-						<SessionModal></SessionModal>
+						<SessionModal />
 					</div>
 				</div>
 			)}
@@ -133,10 +87,14 @@ function MainCalendar() {
 				</div>
 				<div className={styles.calendarBody}>
 					{days.map((day, dayIdx) => {
-						newDate = addDays(today, 1);
+						newDate = addDays(newDate, 1);
 						let todayStringified = formatISO(newDate, {
 							format: "extended",
 							representation: "date",
+						});
+						let dayHeader = intlFormat(newDate, {
+							month: "long",
+							day: "numeric",
 						});
 						return (
 							<div
@@ -145,7 +103,7 @@ function MainCalendar() {
 								key={dayIdx}
 								day
 							>
-								<div className={styles.dayName}>{day}</div>
+								<div className={styles.dayName}>{day + "\n" + dayHeader}</div>
 								{setTimeBlock().map((hour, hrIdx) => {
 									return (
 										<HourBlock
@@ -153,8 +111,15 @@ function MainCalendar() {
 											key={hrIdx}
 											className={styles.hourBlock}
 											modalIsShown
-											hourIndex={hour.name}
-											date={todayStringified}
+											time={
+												todayStringified +
+												"T" +
+												`${
+													hrIdx + 8 < 10
+														? `0${hrIdx + 8}:00`
+														: `${hrIdx + 8}:00`
+												}`
+											}
 										/>
 									);
 								})}

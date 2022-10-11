@@ -94,13 +94,12 @@ body {
 }
 
 .dayName {
-	grid-column: 1;
 	text-align: center;
 	background-color: #18698d;
 	align-self: center;
 	color: white;
 	text-transform: uppercase;
-	font-size: 25px;
+	font-size: 17px;
 	font-weight: 600;
 	height: 6%;
 }
@@ -129,4 +128,13 @@ body {
 	height: 36px;
 	width: 10rem;
 	border-bottom: 1px rgb(78, 78, 78) solid;
+}
+
+img {
+	width: 200px;
+}
+.flex {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }

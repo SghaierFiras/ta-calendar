@@ -1,12 +1,13 @@
 import React from "react";
 import styles from "./style.module.css";
+import logo from "./TxLogo.png";
 
 function CalendarHeader(props) {
 	return (
 		<div className={styles.calendarHeader}>
 			<div className={styles.logo}>
-				<a>
-					{/* <img src='/public/TxLogo.svg' alt='TAlogo' /> */}
+				<a className={styles.flex}>
+					<img src={logo} />
 					<span>TakiAcademy Calendar</span>
 				</a>
 			</div>
