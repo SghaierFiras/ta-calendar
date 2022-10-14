@@ -7,7 +7,7 @@ import WeekdayHelper from "./WeekdayHelper";
 
 import { addDays, intlFormat, formatISO } from "date-fns";
 function CalendarBody() {
-	let { today, days } = useContext(GlobalContext);
+	let { today, weekdays, currentTime } = useContext(GlobalContext);
 	let newDate = today;
 
 	const [showModal, setShowModal] = useState(false);
@@ -35,6 +35,7 @@ function CalendarBody() {
 		}
 		return timeBlock;
 	};
+	WeekdayHelper();
 	return (
 		<Fragment>
 			{showModal && (
@@ -56,7 +57,7 @@ function CalendarBody() {
 					))}
 				</div>
 				<div className={styles.calendarBody}>
-					{WeekdayHelper().map((day, dayIdx) => {
+					{weekdays.map((day, dayIdx) => {
 						newDate = addDays(newDate, 1);
 						let todayStringified = formatISO(newDate, {
 							format: "extended",
@@ -69,7 +70,9 @@ function CalendarBody() {
 								key={dayIdx}
 								day
 							>
-								<div className={styles.dayName}>{day}</div>
+								<div className={styles.dayName}>
+									{day.dayName + "\n" + day.date}
+								</div>
 								{setTimeBlock().map((hour, hrIdx) => {
 									return (
 										<HourBlock

@@ -35,7 +35,7 @@ function SessionForm(props) {
 			headers: { "Content-Type": "application/json" },
 		});
 	};
-	// console.log("sessionForm", currentTime);
+	console.log("sessionForm", currentTime);
 	return (
 		<div className={styles.card}>
 			<form className={styles.form} onSubmit={addEventHandler}>

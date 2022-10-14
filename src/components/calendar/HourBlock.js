@@ -9,12 +9,11 @@ function HourBlock(props) {
 		e.preventDefault();
 		showModal = true;
 		currentTime = props.time;
-		console.log("HourBlock", props.time, currentTime);
+		console.log("HourBlock",  currentTime);
 	};
 	return (
 		// <div className={styles.dayBlock}>
-		<div className={styles.hourBlock} onClick={showEventHandler}>
-		</div>
+		<div className={styles.hourBlock} onClick={showEventHandler}></div>
 		// </div>
 	);
 }
