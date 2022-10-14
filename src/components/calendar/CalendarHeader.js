@@ -6,10 +6,10 @@ function CalendarHeader(props) {
 	return (
 		<div className={styles.calendarHeader}>
 			<div className={styles.logo}>
-				<a className={styles.flex}>
-					<img src={logo} />
+				<div className={styles.flex} href=''>
+					<img src={logo} alt='' />
 					<span>TakiAcademy Calendar</span>
-				</a>
+				</div>
 			</div>
 			<div className={styles.sousHeader}>
 				<button className={styles.button} onClick={props.showPrevWeek}>
