@@ -1,3 +1,17 @@
+# Components Tree
+
+App> MainCalendar> CalendarBody>
+HourBlock/SessionModel/SessionForm
+
+# Helper to Manipulate days
+
+WeekdayHelper.js
+
+# Data
+
+Using Firebase as a dummy DB
+// https://calendar-ta-default-rtdb.firebaseio.com/events.json
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
