@@ -1,13 +1,15 @@
-import React, { useState, useContext, Fragment } from "react";
+import React, { useState, useContext, Fragment, useEffect } from "react";
 import styles from "./style.module.css";
 import GlobalContext from "../../context/GlobalContext";
 import HourBlock from "./HourBlock";
 import SessionModal from "../features/SessionModal";
 import WeekdayHelper from "./WeekdayHelper";
+import PaginateWeeks from "../features/PaginateWeeks";
 
-import { addDays, intlFormat, formatISO } from "date-fns";
+import { addDays, formatISO } from "date-fns";
 function CalendarBody() {
-	let { today, weekdays, currentTime } = useContext(GlobalContext);
+	let { today } = useContext(GlobalContext);
+
 	let newDate = today;
 
 	const [showModal, setShowModal] = useState(false);
@@ -35,7 +37,7 @@ function CalendarBody() {
 		}
 		return timeBlock;
 	};
-	WeekdayHelper();
+	console.log(newDate);
 	return (
 		<Fragment>
 			{showModal && (
@@ -57,7 +59,7 @@ function CalendarBody() {
 					))}
 				</div>
 				<div className={styles.calendarBody}>
-					{weekdays.map((day, dayIdx) => {
+					{PaginateWeeks().map((day, dayIdx) => {
 						newDate = addDays(newDate, 1);
 						let todayStringified = formatISO(newDate, {
 							format: "extended",
@@ -68,7 +70,6 @@ function CalendarBody() {
 								className={styles.dayBlock}
 								onClick={toggleEventModalHandler}
 								key={dayIdx}
-								day
 							>
 								<div className={styles.dayName}>
 									{day.dayName + "\n" + day.date}
@@ -80,15 +81,7 @@ function CalendarBody() {
 											key={hrIdx}
 											className={styles.hourBlock}
 											modalIsShown
-											time={
-												todayStringified +
-												"T" +
-												`${
-													hrIdx + 8 < 10
-														? `0${hrIdx + 8}:00`
-														: `${hrIdx + 8}:00`
-												}`
-											}
+											time={todayStringified + "T" + hour.name}
 										/>
 									);
 								})}

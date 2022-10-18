@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useRef, useContext } from "react";
 import styles from "./featuresStyles.module.css";
 import GlobalContext from "../../context/GlobalContext";
 

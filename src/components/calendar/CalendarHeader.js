@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import styles from "./style.module.css";
 import logo from "./TxLogo.png";
+import GlobalContext from "../../context/GlobalContext";
 
 function CalendarHeader(props) {
+	let { showPrevWeek, showNextWeek } = useContext(
+		GlobalContext
+	);
+
+	// console.log("CalendarHeader", currentWeekIndex);
 	return (
 		<div className={styles.calendarHeader}>
 			<div className={styles.logo}>
@@ -12,11 +18,11 @@ function CalendarHeader(props) {
 				</div>
 			</div>
 			<div className={styles.sousHeader}>
-				<button className={styles.button} onClick={props.showPrevWeek}>
+				<button className={styles.button} onClick={showPrevWeek}>
 					Previous Week
 				</button>
 				<h1>THIS WEEKS EVENTS</h1>
-				<button className={styles.button} onClick={props.showNextWeek}>
+				<button className={styles.button} onClick={showNextWeek}>
 					Next Week
 				</button>
 			</div>

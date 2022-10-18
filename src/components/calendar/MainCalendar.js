@@ -1,13 +1,13 @@
-import React, { Fragment } from "react";
+import React from "react";
 import CalendarHeader from "./CalendarHeader";
 import CalendarBody from "./CalendarBody";
 
 function MainCalendar() {
 	return (
-		<Fragment>
+		<div>
 			<CalendarHeader />
 			<CalendarBody />
-		</Fragment>
+		</div>
 	);
 }
 
