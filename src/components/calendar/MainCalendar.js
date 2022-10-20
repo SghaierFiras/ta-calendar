@@ -4,10 +4,10 @@ import CalendarBody from "./CalendarBody";
 
 function MainCalendar() {
 	return (
-		<div>
+		<>
 			<CalendarHeader />
 			<CalendarBody />
-		</div>
+		</>
 	);
 }
 

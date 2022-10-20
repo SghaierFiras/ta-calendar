@@ -4,11 +4,10 @@ import logo from "./TxLogo.png";
 import GlobalContext from "../../context/GlobalContext";
 
 function CalendarHeader(props) {
-	let { showPrevWeek, showNextWeek } = useContext(
-		GlobalContext
-	);
+	let { setShowPrevWeek, setShowNextWeek } = useContext(GlobalContext);
+	const showPrev = () => {};
+	const showNext = () => setShowNextWeek(true);
 
-	// console.log("CalendarHeader", currentWeekIndex);
 	return (
 		<div className={styles.calendarHeader}>
 			<div className={styles.logo}>
@@ -18,11 +17,11 @@ function CalendarHeader(props) {
 				</div>
 			</div>
 			<div className={styles.sousHeader}>
-				<button className={styles.button} onClick={showPrevWeek}>
+				<button className={styles.button} onClick={showPrev}>
 					Previous Week
 				</button>
 				<h1>THIS WEEKS EVENTS</h1>
-				<button className={styles.button} onClick={showNextWeek}>
+				<button className={styles.button} onClick={showNext}>
 					Next Week
 				</button>
 			</div>

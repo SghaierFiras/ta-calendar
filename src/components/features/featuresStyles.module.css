@@ -46,3 +46,7 @@ button[type="reset"] {
 .closeModal:hover {
 	cursor: pointer;
 }
+
+.sessionCard {
+	color: royalblue;
+}

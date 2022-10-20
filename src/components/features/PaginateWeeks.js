@@ -11,7 +11,6 @@ function PaginateWeeks() {
 		nextDayInWeekIndex,
 		lastDayInWeekIndex
 	);
-
 	return currentDays;
 }
 

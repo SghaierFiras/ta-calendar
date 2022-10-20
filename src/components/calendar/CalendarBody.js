@@ -1,96 +1,62 @@
-import React, { useState, useContext, Fragment, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styles from "./style.module.css";
 import GlobalContext from "../../context/GlobalContext";
 import HourBlock from "./HourBlock";
-import SessionModal from "../features/SessionModal";
-import WeekdayHelper from "./WeekdayHelper";
-import PaginateWeeks from "../features/PaginateWeeks";
+import SessionModal from "../features/SessionForm";
+import DaysMatrixHelper from "./DaysMatrixHelper";
 
-import { addDays, formatISO } from "date-fns";
+import { addDays, subDays } from "date-fns";
+
 function CalendarBody() {
-	let { today } = useContext(GlobalContext);
-
-	let newDate = today;
-
-	const [showModal, setShowModal] = useState(false);
+	let {
+		timezone,
+		showModal,
+		setShowModal,
+		showNextWeek,
+		showPrevWeek,
+	} = useContext(GlobalContext);
 
 	const closeModal = () => {
-		return setShowModal(true);
+		setShowModal(false);
 	};
 
-	const toggleEventModalHandler = (e, hrIdx, dayIdx) => {
-		e.preventDefault();
-		setShowModal(!showModal);
-	};
+	let days = DaysMatrixHelper(timezone);
 
-	const setTimeBlock = () => {
-		const timeBlock = [];
-
-		for (let index = 8; index <= 22; index++) {
-			timeBlock.push({
-				id: index - 8,
-
-				name: `${index < 10 ? `0${index}:00` : `${index}:00`}`,
-
-				events: [],
-			});
-		}
-		return timeBlock;
-	};
-	console.log(newDate);
 	return (
-		<Fragment>
+		<>
 			{showModal && (
 				<div>
-					<div
-						onClick={toggleEventModalHandler}
-						className={styles.backdrop}
-					></div>
+					<div onClick={closeModal} className={styles.backdrop}></div>
 					<div>
-						<SessionModal />
+						<SessionModal closeModal={closeModal} />
 					</div>
 				</div>
 			)}
 			<div className={styles.mainCalendar}>
-				<div onClick={closeModal} className={styles.timeline}>
+				<div className={styles.timeline}>
 					<div className={styles.hourHeader}>TIME</div>
-					{setTimeBlock().map((hour) => (
-						<div className={styles.hour}>{hour.name}</div>
+					{timezone.map((hour) => (
+						<div className={styles.hour}>{hour}</div>
 					))}
 				</div>
 				<div className={styles.calendarBody}>
-					{PaginateWeeks().map((day, dayIdx) => {
-						newDate = addDays(newDate, 1);
-						let todayStringified = formatISO(newDate, {
-							format: "extended",
-							representation: "date",
-						});
+					{days.map((day, i) => {
 						return (
-							<div
-								className={styles.dayBlock}
-								onClick={toggleEventModalHandler}
-								key={dayIdx}
-							>
-								<div className={styles.dayName}>
-									{day.dayName + "\n" + day.date}
+							<>
+								<div className={styles.dayBlock}>
+									<div className={styles.dayName}>
+										{day.day + "\n" + day.date}
+									</div>
+									{day.hour.map((hour, j) => (
+										<HourBlock time={day.date + "T" + hour} />
+									))}
 								</div>
-								{setTimeBlock().map((hour, hrIdx) => {
-									return (
-										<HourBlock
-											onClick={toggleEventModalHandler}
-											key={hrIdx}
-											className={styles.hourBlock}
-											modalIsShown
-											time={todayStringified + "T" + hour.name}
-										/>
-									);
-								})}
-							</div>
+							</>
 						);
 					})}
 				</div>
 			</div>
-		</Fragment>
+		</>
 	);
 }
 

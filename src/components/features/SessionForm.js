@@ -12,14 +12,6 @@ function SessionForm(props) {
 	const subjectRef = useRef();
 	const levelRef = useRef();
 
-	// useEffect(() => {
-	// 	fetch("https://calendar-ta-default-rtdb.firebaseio.com/events.json")
-	// 		.then((res) => res.json())
-	// 		.then((data) => {
-	// 			setEvents(data);
-	// 		});
-	// }, []);
-
 	const addEventHandler = (e) => {
 		e.preventDefault();
 		const addedEvent = {
@@ -35,7 +27,7 @@ function SessionForm(props) {
 			headers: { "Content-Type": "application/json" },
 		});
 	};
-	console.log("sessionForm", currentTime);
+	// console.log("sessionForm", currentTime);
 	return (
 		<div className={styles.card}>
 			<form className={styles.form} onSubmit={addEventHandler}>

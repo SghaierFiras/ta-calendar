@@ -3,7 +3,7 @@ import styles from './featuresStyles.module.css'
 
 function SessionCard() {
   return (
-    <div>
+    <div className={styles.sessionCard}>
       <p>Session Title</p>
       <p>Session Time</p>
       <p>Bientôt</p>

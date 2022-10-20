@@ -18,7 +18,7 @@ function WeekdayHelper() {
 			"saturday",
 		][new Date(date).getDay()];
 		let day = {
-			date: intlFormat(today, {
+			date: intlFormat(date, {
 				month: "long",
 				day: "numeric",
 			}),

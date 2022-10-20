@@ -3,17 +3,20 @@ import styles from "./style.module.css";
 import GlobalContext from "../../context/GlobalContext";
 
 function HourBlock(props) {
-	let { currentTime } = useContext(GlobalContext);
+	let { setCurrentTime, currentTime, showModal, setShowModal } = useContext(
+		GlobalContext
+	);
 
 	const showEventHandler = (e) => {
 		e.preventDefault();
-		currentTime = props.time;
-		console.log("HourBlock", props.time, currentTime);
+		setShowModal(!showModal);
+		setCurrentTime(props.time);
 	};
 	return (
-		// <div className={styles.dayBlock}>
-		<div className={styles.hourBlock} onClick={showEventHandler}></div>
-		// </div>
+		<div
+			className={styles.hourBlock}
+			onClick={(e) => showEventHandler(e)}
+		></div>
 	);
 }
 
